@@ -1,0 +1,1441 @@
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>$BITWHALE</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/3/3.1.0/iconify.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link rel="icon" href="/logo.png" />
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+      body {
+          font-family: 'Space Grotesk', sans-serif;
+          background-color: #050505;
+          color: #e5e5e5;
+          overflow-x: hidden;
+      }
+
+      /* Smooth Reveal Animation classes */
+      .reveal {
+          opacity: 0;
+          transform: translateY(30px);
+          transition: all 1s cubic-bezier(0.16, 1, 0.3, 1);
+      }
+      .reveal.active {
+          opacity: 1;
+          transform: translateY(0);
+      }
+
+      /* Custom Scrollbar */
+      ::-webkit-scrollbar {
+          width: 6px;
+      }
+      ::-webkit-scrollbar-track {
+          background: #0a0a0a;
+      }
+      ::-webkit-scrollbar-thumb {
+          background: #333;
+          border-radius: 3px;
+      }
+      ::-webkit-scrollbar-thumb:hover {
+          background: #444;
+      }
+
+      /* Liquid Glass Animation */
+      @keyframes liquid {
+          0% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+          50% { border-radius: 30% 60% 70% 40%/50% 60% 30% 60%; }
+          100% { border-radius: 60% 40% 30% 70%/60% 30% 70% 40%; }
+      }
+
+      .liquid-border::before {
+          content: '';
+          position: absolute;
+          inset: -2px;
+          background: linear-gradient(45deg, rgba(56, 189, 248, 0.3), rgba(255, 255, 255, 0.1), rgba(56, 189, 248, 0.3));
+          border-radius: inherit;
+          z-index: -1;
+          filter: blur(8px);
+          opacity: 0.7;
+      }
+
+      /* Flywheel Animation */
+      @keyframes spin-slow {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+      }
+      @keyframes flow {
+          0% { stroke-dashoffset: 1000; }
+          100% { stroke-dashoffset: 0; }
+      }
+
+      .grid-bg {
+          background-size: 40px 40px;
+          background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                            linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+      }
+
+      /* Loading Screen Animations */
+      @keyframes fade-out-loader {
+        0% { 
+          opacity: 1;
+          visibility: visible;
+        }
+        99% {
+          opacity: 0;
+          visibility: visible;
+        }
+        100% { 
+          opacity: 0;
+          visibility: hidden;
+        }
+      }
+
+      /* Battery Loading Bar Animations */
+      @keyframes battery-fill {
+        0% {
+          background: #404040;
+        }
+        100% {
+          background: linear-gradient(135deg, #F7931A 0%, #FFA726 50%, #F7931A 100%);
+          background-size: 200% 200%;
+          animation: gradient-shift 2s ease infinite;
+        }
+      }
+
+      @keyframes gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+
+      .battery-rect {
+        width: calc(75vw / 22);
+        height: calc(75vw / 22 * 2.5);
+        background: #404040;
+        border-radius: 8px;
+        animation: battery-fill 0.4s ease-in-out forwards;
+      }
+
+      .battery-rect:nth-child(1) { animation-delay: 0s; }
+      .battery-rect:nth-child(2) { animation-delay: 0.1s; }
+      .battery-rect:nth-child(3) { animation-delay: 0.2s; }
+      .battery-rect:nth-child(4) { animation-delay: 0.3s; }
+      .battery-rect:nth-child(5) { animation-delay: 0.4s; }
+      .battery-rect:nth-child(6) { animation-delay: 0.5s; }
+      .battery-rect:nth-child(7) { animation-delay: 0.6s; }
+      .battery-rect:nth-child(8) { animation-delay: 0.7s; }
+      .battery-rect:nth-child(9) { animation-delay: 0.8s; }
+      .battery-rect:nth-child(10) { animation-delay: 0.9s; }
+      .battery-rect:nth-child(11) { animation-delay: 1s; }
+      .battery-rect:nth-child(12) { animation-delay: 1.1s; }
+      .battery-rect:nth-child(13) { animation-delay: 1.2s; }
+      .battery-rect:nth-child(14) { animation-delay: 1.3s; }
+      .battery-rect:nth-child(15) { animation-delay: 1.4s; }
+
+      .battery-rect.filled {
+        background: linear-gradient(135deg, #F7931A 0%, #FFA726 50%, #F7931A 100%);
+        background-size: 200% 200%;
+        animation: gradient-shift 2s ease infinite;
+      }
+
+      /* Bitcoin Orange Aura Float Animations */
+      @keyframes float1 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(100px, 50px) scale(1.1); }
+        50% { transform: translate(50px, 100px) scale(0.9); }
+        75% { transform: translate(-50px, 50px) scale(1.05); }
+      }
+      @keyframes float2 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        25% { transform: translate(-80px, -40px) scale(0.95); }
+        50% { transform: translate(-40px, -80px) scale(1.1); }
+        75% { transform: translate(40px, -40px) scale(1); }
+      }
+      @keyframes float3 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        33% { transform: translate(60px, -60px) scale(1.15); }
+        66% { transform: translate(-60px, 60px) scale(0.85); }
+      }
+      @keyframes float4 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        20% { transform: translate(-70px, 30px) scale(1.08); }
+        40% { transform: translate(30px, 70px) scale(0.92); }
+        60% { transform: translate(70px, -30px) scale(1.12); }
+        80% { transform: translate(-30px, -70px) scale(0.95); }
+      }
+      @keyframes float5 {
+        0%, 100% { transform: translate(0, 0) scale(1); }
+        50% { transform: translate(90px, -90px) scale(1.2); }
+      }
+      @keyframes gradient-pulse {
+        0%, 100% { opacity: 0.6; }
+        50% { opacity: 1; }
+      }
+      @keyframes orange-gradient-shift {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      .animated-orange-number {
+        background: linear-gradient(90deg, #fb923c, #f97316, #ea580c, #f97316, #fb923c);
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: orange-gradient-shift 4s ease-in-out infinite;
+      }
+      .menu-link {
+        transform: translateX(20px);
+        transition: opacity 0.3s ease, transform 0.3s ease, color 0.2s, background-color 0.2s;
+      }
+      
+      /* Orange Gradient Headers */
+      .orange-gradient-header {
+        background: linear-gradient(90deg, 
+          #F7931A 0%,      /* Bright Bitcoin orange */
+          #FF9500 25%,     /* Bright orange */
+          #E8820C 50%,     /* Medium orange */
+          #D4740A 75%,     /* Darker orange */
+          #F7931A 100%     /* Back to bright */
+        );
+        background-size: 200% 100%;
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-clip: text;
+        animation: orange-gradient-move 4s ease-in-out infinite;
+      }
+      
+      @keyframes orange-gradient-move {
+        0% { background-position: 0% 50%; }
+        50% { background-position: 100% 50%; }
+        100% { background-position: 0% 50%; }
+      }
+      
+      /* Orange Glow Border for Flywheel */
+      .orange-glow-border {
+        box-shadow: 0 0 20px rgba(249, 115, 22, 0.4), 
+                    0 0 40px rgba(249, 115, 22, 0.2), 
+                    inset 0 0 20px rgba(249, 115, 22, 0.1);
+      }
+      
+      /* Navigation link glow on hover */
+      .hidden.md\:flex a[href^="#"]:hover {
+        text-shadow: 0 0 20px rgba(255, 149, 0, 0.4);
+      }
+      
+      /* Mobile image grid always 2 columns */
+      @media (max-width: 400px) {
+        #image-grid {
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 0.75rem;
+        }
+      }
+      
+      /* Lazy Loading Optimization */
+      img[loading="lazy"] {
+        /* Hint to browser to prioritize quality over speed for thumbnails */
+        image-rendering: -webkit-optimize-contrast;
+        image-rendering: crisp-edges;
+      }
+      
+      /* Loading state for lazy images */
+      img[loading="lazy"]:not([src]) {
+        background: linear-gradient(90deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.1) 50%, rgba(255,255,255,0.05) 100%);
+        background-size: 200% 100%;
+        animation: shimmer 1.5s infinite;
+      }
+      
+      @keyframes shimmer {
+        0% { background-position: -200% 0; }
+        100% { background-position: 200% 0; }
+      }
+      
+      /* Full quality for modal preview */
+      #preview-image {
+        image-rendering: high-quality;
+        image-rendering: -webkit-optimize-contrast;
+      }
+    </style>
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+  </head>
+  <body class="relative">
+    <!-- Loading Screen -->
+    <div id="loading-screen" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center" style="background: #050505;">
+      <!-- Main content -->
+      <div class="relative z-10 flex flex-col items-center gap-12">
+        <!-- Loading text -->
+        <div class="text-center space-y-3">
+          <h2 id="loading-text" class="text-4xl md:text-5xl font-bold orange-gradient-header tracking-wide">
+            LOADING
+          </h2>
+          <p class="text-sm md:text-base text-white/60 tracking-widest uppercase font-medium">
+            CALCULATING BULLISHNESS...
+          </p>
+        </div>
+        
+        <!-- Battery Loading Bar -->
+        <div class="flex items-center justify-center" style="gap: calc(75vw / 44);">
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+          <div class="battery-rect"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bitcoin Orange Aura Background -->
+    <div class="fixed inset-0 z-0 pointer-events-none">
+      <!-- UnicornStudio Integration -->
+      <div class="aura-background-component w-full h-full">
+        <div data-us-project="UtvhDctN8AjL6tvf1yKd" 
+             class="absolute w-full h-full left-0 top-0 z-0" 
+             style="filter: hue-rotate(180deg) saturate(1.2);"></div>
+        <script type="text/javascript">
+          !function(){if(!window.UnicornStudio){window.UnicornStudio={isInitialized:!1};var i=document.createElement("script");i.src="https://cdn.jsdelivr.net/gh/hiunicornstudio/unicornstudio.js@v1.4.29/dist/unicornStudio.umd.js",i.onload=function(){window.UnicornStudio.isInitialized||(UnicornStudio.init(),window.UnicornStudio.isInitialized=!0)},(document.head || document.body).appendChild(i)}}();
+        </script>
+      </div>
+      
+      <!-- Fallback CSS Animation -->
+      <div class="absolute inset-0 z-0 overflow-hidden">
+        <div class="absolute w-[800px] h-[800px] rounded-full opacity-30" 
+             style="background: radial-gradient(circle, #F7931A 0%, transparent 70%); top: -20%; left: -10%; animation: float1 20s ease-in-out infinite;"></div>
+        <div class="absolute w-[600px] h-[600px] rounded-full opacity-25" 
+             style="background: radial-gradient(circle, #FF9500 0%, transparent 70%); bottom: -15%; right: -5%; animation: float2 25s ease-in-out infinite;"></div>
+        <div class="absolute w-[500px] h-[500px] rounded-full opacity-20" 
+             style="background: radial-gradient(circle, #E8820C 0%, transparent 70%); top: 30%; left: 40%; animation: float3 18s ease-in-out infinite;"></div>
+        <div class="absolute w-[700px] h-[700px] rounded-full opacity-15" 
+             style="background: radial-gradient(circle, #D4740A 0%, transparent 70%); top: 50%; right: 20%; animation: float4 22s ease-in-out infinite;"></div>
+        <div class="absolute w-[400px] h-[400px] rounded-full opacity-25" 
+             style="background: radial-gradient(circle, #FFA726 0%, transparent 70%); bottom: 20%; left: 20%; animation: float5 15s ease-in-out infinite;"></div>
+      </div>
+      
+      <div class="absolute inset-0 grid-bg opacity-30"></div>
+    </div>
+
+    <!-- Scroll Progress Bar -->
+    <div id="scroll-progress" class="fixed top-0 left-0 right-0 h-[2px] bg-gradient-to-r from-orange-500 via-orange-600 to-orange-500 origin-left transform scale-x-0 transition-transform duration-100 ease-out z-[100]" style="will-change: transform;"></div>
+
+    <!-- Navigation -->
+    <div class="fixed top-0 left-0 right-0 z-50 pt-4 px-4 sm:px-6">
+      <div class="max-w-6xl mx-auto rounded-full border border-white/10" style="background: rgba(10, 10, 12, 0.6); backdrop-filter: blur(16px) saturate(120%); box-shadow: 0 10px 30px rgba(0,0,0,0.25);">
+        <div class="flex items-center justify-between px-8 py-3">
+          <!-- Logo -->
+          <div class="flex items-center">
+            <span class="text-xl sm:text-2xl font-semibold tracking-tight" style="color: #FF9500;">
+             $BITWHALE
+            </span>
+          </div>
+
+          <!-- Center Links (Desktop Only) -->
+          <ul class="hidden md:flex items-center gap-2 text-base font-medium text-white/60 absolute left-1/2 transform -translate-x-1/2">
+            <li class="">
+              <a href="#flywheel" class="hover:text-orange-500 transition-all duration-300 px-4 py-2 rounded-full">
+                Flywheel
+              </a>
+            </li>
+            <li>
+              <a href="#content" class="hover:text-orange-500 transition-all duration-300 px-4 py-2 rounded-full">
+                Content Depo
+              </a>
+            </li>
+            <li>
+              <a href="#how-to-buy" class="hover:text-orange-500 transition-all duration-300 px-4 py-2 rounded-full">
+                How to Buy
+              </a>
+            </li>
+          </ul>
+
+          <!-- Right Actions -->
+          <div class="flex items-center gap-3">
+            <!-- Desktop Social Icons -->
+            <a href="https://dexscreener.com/ethereum/0x44287324752d3007c22f220fb566631e2be7bf4c" target="_blank" class="hidden md:flex group items-center justify-center p-2 rounded-full border border-white/5 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,149,0,0.3)]" title="DexScreener">
+              <img src="WhiteDexscreener.png" alt="DexScreener" class="w-6 h-6 transition-opacity group-hover:opacity-0">
+              <img src="BTCOrangeDexscreener.png" alt="DexScreener" class="w-6 h-6 absolute opacity-0 group-hover:opacity-100 transition-opacity">
+            </a>
+            <a href="hhttps://x.com/The_BTC_Whale" target="_blank" class="hidden md:flex group items-center justify-center p-2 rounded-full border border-white/5 transition-all duration-300 hover:shadow-[0_0_20px_rgba(255,149,0,0.3)]" title="X Community">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="iconify text-white group-hover:text-orange-500 w-6 h-6 transition-colors">
+                <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+              </svg>
+            </a>
+            
+            <!-- Mobile Menu Button -->
+            <button id="mobile-menu-btn" class="md:hidden flex items-center justify-center p-2 rounded-full hover:bg-white/10 border border-white/5 transition-all">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4 6h16M4 12h16M4 18h16"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu-overlay" class="fixed inset-0 bg-black/60 backdrop-blur-sm z-[60] opacity-0 invisible transition-all duration-300"></div>
+
+    <!-- Mobile Menu Panel -->
+    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-full bg-gradient-to-br from-black/40 via-neutral-900/30 to-black/40 backdrop-blur-3xl saturate-150 border-l border-white/5 z-[70] transform translate-x-full transition-all duration-700 ease-in-out" style="backdrop-filter: blur(40px) saturate(150%);">
+      <!-- Header with X button -->
+      <div class="flex justify-between items-center p-6 border-b border-white/10">
+        <span class="text-lg font-semibold text-white">Menu</span>
+        <button id="close-menu-btn" class="w-10 h-10 flex items-center justify-center rounded-full hover:bg-white/10 transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+      </div>
+      
+      <!-- Navigation Links -->
+      <nav class="p-6 space-y-2">
+        <a href="#flywheel" class="menu-link block py-4 px-4 text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-all opacity-0 flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.8)] animate-pulse"></span>
+          Flywheel
+        </a>
+        <div class="h-px bg-white/10"></div>
+        <a href="#content" class="menu-link block py-4 px-4 text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-all opacity-0 flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.8)] animate-pulse"></span>
+          Content Depo
+        </a>
+        <div class="h-px bg-white/10"></div>
+        <a href="#how-to-buy" class="menu-link block py-4 px-4 text-white/80 hover:text-white hover:bg-white/5 rounded-lg transition-all opacity-0 flex items-center gap-3">
+          <span class="w-2 h-2 rounded-full bg-orange-500 shadow-[0_0_12px_rgba(249,115,22,0.8)] animate-pulse"></span>
+          How to Buy
+        </a>
+      </nav>
+      
+      <!-- Bottom Social Links -->
+      <div class="absolute bottom-0 left-0 right-0 p-6 border-t border-white/10 space-y-4">
+        <!-- Buy Now Button - Bold & Prominent -->
+        <a href="https://app.uniswap.org/#/swap?inputCurrency=eth&outputCurrency=0x44287324752d3007c22f220fb566631e2be7bf4c" 
+           target="_blank"
+           class="flex items-center justify-center gap-3 py-4 px-6 mb-4
+                  bg-gradient-to-r from-orange-500 to-orange-600 
+                  hover:from-orange-600 hover:to-orange-700
+                  rounded-xl transition-all duration-300 
+                  shadow-lg shadow-orange-500/50 hover:shadow-orange-500/70
+                  group">
+          <span class="text-base font-bold text-white tracking-wide"
+                style="text-shadow: 0 0 20px rgba(249, 115, 22, 0.6);">
+            Buy Now
+          </span>
+          <svg xmlns="http://www.w3.org/2000/svg" 
+               class="w-5 h-5 text-white group-hover:translate-x-1 transition-transform" 
+               fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+          </svg>
+        </a>
+        <a href="hhttps://x.com/The_BTC_Whale" target="_blank" class="flex items-center gap-3 py-3 px-4 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5">
+            <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+            <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+          </svg>
+          <span class="text-sm">X Community</span>
+        </a>
+        <a href="https://dexscreener.com/ethereum/0x44287324752d3007c22f220fb566631e2be7bf4c" target="_blank" class="flex items-center gap-3 py-3 px-4 text-white/70 hover:text-white hover:bg-white/5 rounded-lg transition-all group">
+          <div class="relative w-5 h-5">
+            <img src="WhiteDexscreener.png" alt="DexScreener" class="w-5 h-5 transition-opacity group-hover:opacity-0">
+            <img src="BTCOrangeDexscreener.png" alt="DexScreener" class="w-5 h-5 absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity">
+          </div>
+          <span class="text-sm">DexScreener</span>
+        </a>
+        <button onclick="copyToClipboard(this)" class="w-full flex items-center justify-between py-3 px-4 bg-white/5 hover:bg-white/10 border border-white/10 rounded-lg transition-all text-left">
+          <div class="flex flex-col gap-1 flex-1 min-w-0">
+            <span class="text-xs text-white/60">Contract Address</span>
+            <span class="text-xs font-mono text-cyan-400 truncate">0x44287324752d3007c22f220fb566631e2be7bf4c</span>
+          </div>
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-cyan-400 flex-shrink-0 ml-2" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Hero Section -->
+    <section class="relative min-h-[85vh] flex flex-col justify-center items-center pt-12 md:pt-48 pb-2 md:pb-12 px-6 overflow-hidden">
+      <div class="flex flex-col items-center gap-12 z-10 w-full max-w-7xl mx-auto">
+        <!-- Hero Content (Text & Button) -->
+        <div class="text-center">
+          <div class="reveal active">
+            <h1 class="md:text-6xl lg:text-7xl leading-tight flex flex-row items-baseline gap-3 flex-wrap text-4xl font-semibold tracking-tight mb-6 justify-center">
+              <span class="orange-gradient-header">BITCOIN WHALE</span><span style="color: #E8820C;">MEME</span>
+            </h1>
+          </div>
+        </div>
+
+        <!-- Hero Video (75% viewport width) -->
+        <div class="w-full max-w-[75vw] reveal delay-200 active">
+          <div class="relative">
+            <div class="relative rounded-2xl overflow-hidden border border-white/10 bg-black/40 backdrop-blur-sm shadow-2xl">
+              <video id="hero-video" autoplay muted loop playsinline preload="metadata" class="w-full" style="aspect-ratio: 16 / 9; transform: scale(1.35); transform-origin: center center;">
+                <source src="demo.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+              </video>
+              
+              <!-- Custom Video Controls -->
+              <div class="mt-4 flex items-center gap-4 px-4">
+                <!-- Scrubber Bar -->
+                <div class="flex-1 relative group/scrubber cursor-pointer" id="video-scrubber-container">
+                  <div class="h-2 bg-white/10 rounded-full overflow-hidden backdrop-blur-sm">
+                    <div id="video-progress" class="h-full bg-gradient-to-r from-orange-500 to-orange-600 transition-all duration-100" style="width: 0%"></div>
+                  </div>
+                  <!-- Hover tooltip -->
+                  <div id="scrubber-tooltip" class="absolute -top-8 left-0 px-2 py-1 bg-black/80 text-white text-xs rounded opacity-0 group-hover/scrubber:opacity-100 transition-opacity pointer-events-none">
+                    0:00
+                  </div>
+                </div>
+                
+                <!-- Mute Toggle Button -->
+                <button id="mute-toggle" class="p-2 rounded-full bg-white/10 hover:bg-white/20 transition-all backdrop-blur-sm" title="Toggle Mute">
+                  <svg id="mute-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                    <line x1="23" y1="9" x2="17" y2="15"></line>
+                    <line x1="17" y1="9" x2="23" y2="15"></line>
+                  </svg>
+                  <svg id="unmute-icon" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white hidden">
+                    <path d="M11 5L6 9H2v6h4l5 4V5z"></path>
+                    <path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path>
+                    <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+            <div class="absolute -inset-1 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-2xl blur-xl -z-10"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Wallet Address Section -->
+    <section class="py-1 md:py-2 px-6 relative z-10">
+      <div class="w-full max-w-[75vw] mx-auto text-center reveal" style="max-width: min(75vw, 1280px);">
+        <div class="flex justify-center">
+          <!-- 3D Glassmorphic Button Component -->
+          <button onclick="copyToClipboard(this)" class="inline-flex transition overflow-hidden group text-xs sm:text-sm text-white/90 rounded-lg px-6 py-4 relative gap-x-2 items-center w-full" style="--x: 50%; --y: 50%; background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 50%, rgba(255, 255, 255, 0.02) 100%); border: 1px solid rgba(255, 255, 255, 0.15); box-shadow: 0 8px 32px rgba(0,0,0,0.4); backdrop-filter: blur(20px);">
+            <div class="absolute inset-0 rounded-lg" style="background: linear-gradient(135deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.05) 100%); pointer-events: none; z-index: 1;"></div>
+
+            <span class="z-10 relative text-cyan-400 font-semibold mr-2">Contract Address:</span>
+            <span id="wallet-text" class="z-10 relative font-mono tracking-tight text-white/80 group-hover:text-orange-500 transition-colors flex-1">
+              0x44287324752d3007c22f220fb566631e2be7bf4c
+            </span>
+
+            <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" width="1em" height="1em" viewBox="0 0 24 24" data-icon="lucide:copy" class="iconify text-[18px] relative z-10 text-white/80 group-hover:text-orange-500 transition-colors iconify--lucide">
+              <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2">
+                <rect width="14" height="14" x="8" y="8" rx="2" ry="2"></rect>
+                <path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"></path>
+              </g>
+            </svg>
+
+            <style>
+              button:active { transform: scale(0.98) !important; }
+            </style>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- Flywheel Section (Advanced UI) -->
+    <section id="flywheel" class="py-16 px-6 relative overflow-hidden">
+      <div class="max-w-5xl mx-auto">
+        <div class="text-center md:text-left mb-8 reveal max-w-5xl mx-auto">
+          <h2 class="text-3xl md:text-5xl font-semibold tracking-tight mb-4 orange-gradient-header">$BITWHALE Flywheel</h2>
+          <p class="text-neutral-400 w-full text-sm md:text-base leading-relaxed">Utilizing PumpSwap AMM Creator Fees and Pumpfun v2 frameworks, 25% of all creator fees buy back &amp; burn$BITWHALE, and the remaining 75% buy back$BITWHALE.</p>
+        </div>
+
+        <!-- Dynamic Geometry Animation -->
+        <div class="relative h-[500px] md:h-[600px] w-full border border-white/10 rounded-3xl bg-gradient-to-br from-orange-500/10 via-transparent to-orange-600/5 backdrop-blur-md flex items-center justify-center overflow-hidden reveal delay-100 orange-glow-border">
+  <!-- Animated Background -->
+  <div class="absolute inset-0" style="background: radial-gradient(circle at center, rgba(6,182,212,0.1) 0%, transparent 50%); animation: pulse-glow 4s ease-in-out infinite;"></div>
+  
+  <!-- Outer Rotating Ring 1 -->
+  <div class="absolute w-[480px] h-[480px] md:w-[550px] md:h-[550px] rounded-full border border-dashed border-cyan-500/20" style="animation: spin-slow 25s linear infinite;"></div>
+  
+  <!-- Outer Rotating Ring 2 -->
+  <div class="absolute w-[420px] h-[420px] md:w-[480px] md:h-[480px] rounded-full border border-white/10" style="animation: spin-slow 35s linear infinite reverse;"></div>
+  
+  <!-- Inner Rotating Ring -->
+  <div class="absolute w-[320px] h-[320px] md:w-[380px] md:h-[380px] rounded-full border border-cyan-500/10" style="animation: spin-slow 20s linear infinite;"></div>
+  
+  <!-- Flowing Energy Lines SVG -->
+  <svg class="absolute inset-0 w-full h-full" viewBox="0 0 600 600" style="animation: spin-slow 40s linear infinite;">
+    <defs>
+      <linearGradient id="flowGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#06b6d4" stop-opacity="0.6"></stop>
+        <stop offset="50%" stop-color="#3b82f6" stop-opacity="0.3"></stop>
+        <stop offset="100%" stop-color="#06b6d4" stop-opacity="0.6"></stop>
+      </linearGradient>
+    </defs>
+    <circle cx="300" cy="300" r="200" fill="none" stroke="url(#flowGradient)" stroke-width="1" stroke-dasharray="20 10" style="animation: dash-flow 8s linear infinite;"></circle>
+    <circle cx="300" cy="300" r="160" fill="none" stroke="url(#flowGradient)" stroke-width="1" stroke-dasharray="15 15" style="animation: dash-flow 6s linear infinite reverse;"></circle>
+  </svg>
+  
+  <!-- Volume Input Indicator -->
+  <div class="absolute top-8 left-1/2 transform -translate-x-1/2 flex flex-col items-center gap-2 group cursor-pointer">
+    <div class="px-4 py-2 bg-gradient-to-r from-cyan-500/20 to-blue-500/20 rounded-full border border-cyan-500/30 backdrop-blur-sm transition-all duration-300 group-hover:scale-105 group-hover:border-cyan-500/50">
+      <span class="text-xs font-medium text-cyan-300">$BITWHALE Volume</span>
+    </div>
+    <div class="flex flex-col items-center">
+      <svg class="w-4 h-4 text-cyan-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+      <svg class="w-4 h-4 text-cyan-400/60 animate-bounce" style="animation-delay: 0.1s;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path></svg>
+    </div>
+  </div>
+  
+  <!-- Creator Fees Hub -->
+  <div class="absolute top-24 md:top-28 left-1/2 transform -translate-x-1/2 group cursor-pointer">
+    <div class="relative">
+      <div class="w-24 h-24 md:w-28 md:h-28 rounded-full bg-gradient-to-b from-blue-500/20 to-cyan-900/20 border border-blue-500/40 flex flex-col items-center justify-center backdrop-blur-md transition-all duration-500 group-hover:scale-110 group-hover:border-blue-500/60 group-hover:shadow-[0_0_40px_rgba(59,130,246,0.3)]">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 md:w-7 md:h-7 text-blue-400 mb-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+        <span class="text-[10px] md:text-xs text-blue-200 uppercase tracking-wider font-medium">Creator</span>
+        <span class="text-[10px] md:text-xs text-blue-200 uppercase tracking-wider font-medium">Fees</span>
+      </div>
+      <div class="absolute inset-0 border border-blue-500/20 rounded-full animate-ping opacity-30"></div>
+    </div>
+  </div>
+  
+  <!-- Flow Lines from Creator Fees -->
+  <svg class="absolute w-full h-full" viewBox="0 0 600 600" style="pointer-events: none;">
+    <!-- Left flow to 25% -->
+    <path d="M300 200 Q200 280 180 350" fill="none" stroke="url(#flowGradient)" stroke-width="2" stroke-dasharray="8 4" style="animation: dash-flow 2s linear infinite;"></path>
+    <!-- Right flow to 75% -->
+    <path d="M300 200 Q400 280 420 350" fill="none" stroke="url(#flowGradient)" stroke-width="2" stroke-dasharray="8 4" style="animation: dash-flow 2s linear infinite;"></path>
+  </svg>
+  
+  <!-- Main Flywheel Container -->
+  <div class="relative z-10 flex flex-col items-center gap-6 md:gap-8">
+    <!-- Percentage Nodes Row -->
+    <div class="flex items-center gap-8 md:gap-16 mt-16 md:mt-20">
+      <!-- 25% Burn Node -->
+      <div class="relative group cursor-pointer">
+        <div class="w-36 h-36 md:w-44 md:h-44 rounded-full bg-gradient-to-b from-red-500/15 to-red-900/15 border border-red-500/40 flex flex-col items-center justify-center backdrop-blur-md shadow-[0_0_30px_rgba(239,68,68,0.1)] transition-all duration-500 group-hover:scale-110 group-hover:border-red-500/60 group-hover:shadow-[0_0_60px_rgba(239,68,68,0.25)]">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 md:w-10 md:h-10 text-red-400 mb-2 transition-transform duration-300 group-hover:scale-110" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 18.657A8 8 0 016.343 7.343S7 9 9 10c0-2 .5-5 2.986-7C14 5 16.09 5.777 17.656 7.343A7.975 7.975 0 0120 13a7.975 7.975 0 01-2.343 5.657z"></path><path stroke-linecap="round" stroke-linejoin="round" d="M9.879 16.121A3 3 0 1012.015 11L11 14H9c0 .768.293 1.536.879 2.121z"></path></svg>
+          <span class="text-2xl md:text-3xl font-bold text-white tracking-tight">25%</span>
+          <span class="text-[10px] md:text-xs text-red-200 uppercase tracking-widest mt-1">Buy &amp; Burn</span>
+        </div>
+        <div class="absolute inset-0 border border-red-500/20 rounded-full animate-ping opacity-20"></div>
+        <!-- Orbiting particle -->
+        <div class="absolute w-2 h-2 bg-red-400 rounded-full" style="animation: orbit-25 4s linear infinite; box-shadow: 0 0 10px rgba(239,68,68,0.8);"></div>
+      </div>
+      
+      <!-- Center Circular Flow Indicator -->
+      <div class="relative flex items-center justify-center">
+        <div class="w-16 h-16 md:w-20 md:h-20 rounded-full border-2 border-dashed border-cyan-500/40 flex items-center justify-center" style="animation: spin-slow 8s linear infinite;">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-8 h-8 md:w-10 md:h-10 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+        </div>
+        <div class="absolute inset-0 rounded-full bg-cyan-500/10 blur-xl"></div>
+      </div>
+      
+      <!-- 75% Buyback Node -->
+      <div class="relative group cursor-pointer">
+        <div class="w-44 h-44 md:w-52 md:h-52 rounded-full bg-gradient-to-b from-cyan-500/15 to-blue-900/15 border border-cyan-500/40 flex flex-col items-center justify-center backdrop-blur-md shadow-[0_0_40px_rgba(6,182,212,0.1)] transition-all duration-500 group-hover:scale-110 group-hover:border-cyan-500/60 group-hover:shadow-[0_0_80px_rgba(6,182,212,0.3)]">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 md:w-12 md:h-12 text-cyan-400 mb-2 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-180" style="transition: transform 0.5s;" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path></svg>
+          <span class="text-3xl md:text-4xl font-bold text-white tracking-tight">75%</span>
+          <span class="text-[10px] md:text-xs text-cyan-200 uppercase tracking-widest mt-1 text-center">Buyback</span>
+        </div>
+        <div class="absolute inset-0 border border-cyan-500/20 rounded-full animate-ping opacity-20" style="animation-delay: 0.5s;"></div>
+        <!-- Orbiting particles -->
+        <div class="absolute w-3 h-3 bg-cyan-400 rounded-full" style="animation: orbit-75 5s linear infinite; box-shadow: 0 0 15px rgba(6,182,212,0.8);"></div>
+        <div class="absolute w-2 h-2 bg-blue-400 rounded-full" style="animation: orbit-75 5s linear infinite reverse; animation-delay: 2.5s; box-shadow: 0 0 10px rgba(59,130,246,0.8);"></div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Orbiting Particles on Ring Borders -->
+  <div class="orbit-dot-outer-1"></div>
+  <div class="orbit-dot-outer-2"></div>
+  <div class="orbit-dot-inner-1"></div>
+  <div class="orbit-dot-inner-2"></div>
+  <div class="orbit-dot-inner-3"></div>
+  
+  <style>
+    @keyframes pulse-glow {
+      0%, 100% { opacity: 0.3; transform: scale(1); }
+      50% { opacity: 0.6; transform: scale(1.1); }
+    }
+    @keyframes spin-slow {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+    @keyframes dash-flow {
+      from { stroke-dashoffset: 0; }
+      to { stroke-dashoffset: -60; }
+    }
+    @keyframes orbit-25 {
+      from { transform: rotate(0deg) translateX(90px) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(90px) rotate(-360deg); }
+    }
+    @keyframes orbit-75 {
+      from { transform: rotate(0deg) translateX(115px) rotate(0deg); }
+      to { transform: rotate(360deg) translateX(115px) rotate(-360deg); }
+    }
+    /* Orbiting dots that follow circle border paths */
+    .orbit-dot-outer-1,
+    .orbit-dot-outer-2,
+    .orbit-dot-inner-1,
+    .orbit-dot-inner-2,
+    .orbit-dot-inner-3 {
+      position: absolute;
+      border-radius: 50%;
+      top: 50%;
+      left: 50%;
+    }
+    
+    /* Outer ring dots - matches 550px diameter rings */
+    .orbit-dot-outer-1 {
+      width: 8px;
+      height: 8px;
+      background: #06b6d4;
+      box-shadow: 0 0 20px rgba(6, 182, 212, 0.8);
+      offset-path: path('M 0,0 m -275,0 a 275,275 0 1,0 550,0 a 275,275 0 1,0 -550,0');
+      animation: orbit-path 20s linear infinite;
+    }
+    
+    .orbit-dot-outer-2 {
+      width: 6px;
+      height: 6px;
+      background: #3b82f6;
+      box-shadow: 0 0 15px rgba(59, 130, 246, 0.8);
+      offset-path: path('M 0,0 m -240,0 a 240,240 0 1,0 480,0 a 240,240 0 1,0 -480,0');
+      animation: orbit-path 25s linear infinite reverse;
+    }
+    
+    /* Inner ring dots - matches 380px diameter rings */
+    .orbit-dot-inner-1 {
+      width: 5px;
+      height: 5px;
+      background: #06b6d4;
+      box-shadow: 0 0 12px rgba(6, 182, 212, 0.7);
+      offset-path: path('M 0,0 m -190,0 a 190,190 0 1,0 380,0 a 190,190 0 1,0 -380,0');
+      animation: orbit-path 15s linear infinite;
+    }
+    
+    .orbit-dot-inner-2 {
+      width: 4px;
+      height: 4px;
+      background: #ef4444;
+      box-shadow: 0 0 10px rgba(239, 68, 68, 0.7);
+      offset-path: path('M 0,0 m -160,0 a 160,160 0 1,0 320,0 a 160,160 0 1,0 -320,0');
+      animation: orbit-path 18s linear infinite;
+      animation-delay: -5s;
+    }
+    
+    .orbit-dot-inner-3 {
+      width: 3px;
+      height: 3px;
+      background: #06b6d4;
+      opacity: 0.6;
+      box-shadow: 0 0 8px rgba(6, 182, 212, 0.6);
+      offset-path: path('M 0,0 m -160,0 a 160,160 0 1,0 320,0 a 160,160 0 1,0 -320,0');
+      animation: orbit-path 18s linear infinite reverse;
+      animation-delay: -10s;
+    }
+    
+    @keyframes orbit-path {
+      0% { offset-distance: 0%; }
+      100% { offset-distance: 100%; }
+    }
+  </style>
+</div>
+      </div>
+    </section>
+
+    <!-- Content Depo Section -->
+    <section id="content" class="py-12 px-6 pb-16">
+      <div class="max-w-7xl mx-auto">
+        <div class="relative mb-16 p-8 rounded-2xl border border-white/10 bg-gradient-to-br from-cyan-500/5 via-transparent to-blue-600/5 backdrop-blur-md reveal overflow-hidden">
+          <!-- Animated gradient border -->
+          <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-cyan-500 via-blue-500 to-purple-600" style="animation: gradient-pulse 3s ease-in-out infinite;"></div>
+          
+          <!-- Title -->
+          <div class="mb-3">
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight orange-gradient-header">
+              Content Depo
+            </h2>
+          </div>
+          
+          <!-- Description and Button in same row -->
+          <div class="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+            <!-- Description -->
+            <p class="text-neutral-400 text-sm md:text-base max-w-2xl leading-relaxed">
+             $BITWHALE Community Content: Share across socials, bullpost your
+              bags and become the whale you always dreamed to be.
+            </p>
+            
+            <!-- View in Telegram Button -->
+            <a href="https://t.me/The_BTC_Whale" 
+               target="_blank"
+               class="inline-flex items-center gap-3 px-6 py-3 rounded-xl 
+                      bg-gradient-to-r from-blue-500/20 to-cyan-500/20 
+                      backdrop-blur-xl border border-blue-400/30
+                      hover:border-blue-400/60 hover:from-blue-500/30 hover:to-cyan-500/30
+                      transition-all duration-300 group flex-shrink-0">
+              <svg xmlns="http://www.w3.org/2000/svg" 
+                   class="w-5 h-5 text-blue-400 group-hover:scale-110 transition-transform" 
+                   viewBox="0 0 24 24" fill="currentColor">
+                <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.562 8.161l-1.84 8.673c-.137.613-.5.76-1.014.474l-2.8-2.063-1.35 1.3c-.15.15-.275.275-.563.275l.2-2.838 5.188-4.687c.225-.2-.05-.312-.35-.112l-6.4 4.037-2.763-.863c-.6-.187-.612-.6.125-.887l10.8-4.162c.5-.187.938.112.775.887z"/>
+              </svg>
+              <span class="text-sm font-semibold text-blue-300 group-hover:text-blue-200 transition-colors">
+                View in Telegram
+              </span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Image Grid -->
+        <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-4 gap-4" id="image-grid">
+          <!-- Javascript will populate this -->
+      </div>
+    </section>
+
+    <!-- How to Buy Section -->
+    <section id="how-to-buy" class="py-16 px-6 relative overflow-hidden">
+      <div class="max-w-7xl mx-auto">
+        <!-- Section Title -->
+        <div class="relative mb-16 p-8 rounded-2xl border border-white/10 bg-gradient-to-br from-orange-500/5 via-transparent to-orange-600/5 backdrop-blur-md reveal overflow-hidden">
+          <!-- Animated gradient border -->
+          <div class="absolute left-0 top-0 bottom-0 w-1 bg-gradient-to-b from-orange-500 via-cyan-500 to-purple-600" style="animation: gradient-pulse 3s ease-in-out infinite;"></div>
+          
+          <!-- Title -->
+          <div class="mb-3">
+            <h2 class="text-3xl md:text-4xl font-semibold tracking-tight orange-gradient-header">
+              How to Buy$BITWHALE
+            </h2>
+          </div>
+          
+          <!-- Description -->
+          <p class="text-neutral-400 text-sm md:text-base max-w-2xl leading-relaxed">
+            Follow these simple steps to become a Bitcoin Whale and join the community.
+          </p>
+        </div>
+
+        <!-- Main Card Container -->
+        <div class="relative reveal delay-100">
+          <div class="relative rounded-3xl border border-white/10 overflow-hidden" 
+               style="background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 50%, rgba(255, 255, 255, 0.01) 100%); backdrop-filter: blur(20px); box-shadow: 0 8px 32px rgba(0,0,0,0.4);">
+            
+            <!-- Steps Container -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 relative">
+              
+              <!-- Step 1: Download Metamask Wallet -->
+              <div class="group relative p-8 md:p-12 transition-all duration-500 hover:bg-white/5">
+                <div class="relative z-10 flex gap-6">
+                  <!-- Big Number -->
+                  <div class="flex-shrink-0">
+                    <span class="text-6xl md:text-7xl font-bold animated-orange-number" style="text-shadow: 0 0 40px rgba(249, 115, 22, 0.3);">
+                      1
+                    </span>
+                  </div>
+
+                  <!-- Content -->
+                  <div class="flex-1 pt-2 pb-20 relative">
+                    <h3 class="text-xl md:text-2xl font-semibold text-white mb-4 tracking-tight">
+                      Download Metamask Wallet
+                    </h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">
+                      Download a Metamask wallet on <a href="https://metamask.io/" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/30 hover:decoration-cyan-300 transition-colors">browser extension</a> or on the <a href="https://apps.apple.com/us/app/phantom-crypto-wallet/id1598432977" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 underline decoration-cyan-400/30 hover:decoration-cyan-300 transition-colors">appstore</a>. This wallet will act as a digital fridge where you can keep your$BITWHALE tokens & you can hold and interact with Solana-related activities.
+                    </p>
+                    
+                    <!-- Icon Indicator -->
+                    <div class="absolute bottom-8 left-0 flex items-center gap-2">
+                      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-orange-500/20 to-orange-600/20 border border-orange-500/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-orange-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8h2a1 1 0 001-1V5a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1zm12 0h2a1 1 0 001-1V5a1 1 0 00-1-1h-2a1 1 0 00-1 1v2a1 1 0 001 1zM5 20h2a1 1 0 001-1v-2a1 1 0 00-1-1H5a1 1 0 00-1 1v2a1 1 0 001 1z"/>
+                        </svg>
+                      </div>
+                      <span class="text-xs text-neutral-500 font-medium uppercase tracking-wider">Wallet Setup</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Glow Effect on Hover -->
+                <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div class="absolute inset-0 bg-gradient-to-r from-orange-500/5 to-transparent"></div>
+                </div>
+              </div>
+
+              <!-- Divider 1 -->
+              <div class="hidden lg:block absolute left-1/3 top-0 bottom-0 w-px">
+                <div class="h-full w-full bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
+              </div>
+
+              <!-- Step 2: Secure Your Solana -->
+              <div class="group relative p-8 md:p-12 transition-all duration-500 hover:bg-white/5 border-t lg:border-t-0 border-white/5">
+                <div class="relative z-10 flex gap-6">
+                  <!-- Big Number -->
+                  <div class="flex-shrink-0">
+                    <span class="text-6xl md:text-7xl font-bold animated-orange-number" style="text-shadow: 0 0 40px rgba(249, 115, 22, 0.3);">
+                      2
+                    </span>
+                  </div>
+
+                  <!-- Content -->
+                  <div class="flex-1 pt-2 pb-20 relative">
+                    <h3 class="text-xl md:text-2xl font-semibold text-white mb-4 tracking-tight">
+                      Secure Your ETH
+                    </h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">
+                      Purchase Ethereum within the Metamask wallet itself, or use an exchange to deposit Ethereum into your wallet address.
+                    </p>
+                    
+                    <!-- Icon Indicator -->
+                    <div class="absolute bottom-8 left-0 flex items-center gap-2">
+                      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-cyan-500/20 to-blue-600/20 border border-cyan-500/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-cyan-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                      </div>
+                      <span class="text-xs text-neutral-500 font-medium uppercase tracking-wider">Fund Wallet</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Glow Effect on Hover -->
+                <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div class="absolute inset-0 bg-gradient-to-r from-cyan-500/5 to-transparent"></div>
+                </div>
+              </div>
+
+              <!-- Divider 2 -->
+              <div class="hidden lg:block absolute left-2/3 top-0 bottom-0 w-px">
+                <div class="h-full w-full bg-gradient-to-b from-transparent via-white/10 to-transparent"></div>
+              </div>
+
+              <!-- Step 3: Buy Your$BITWHALE -->
+              <div class="group relative p-8 md:p-12 transition-all duration-500 hover:bg-white/5 border-t lg:border-t-0 border-white/5">
+                <div class="relative z-10 flex gap-6">
+                  <!-- Big Number -->
+                  <div class="flex-shrink-0">
+                    <span class="text-6xl md:text-7xl font-bold animated-orange-number" style="text-shadow: 0 0 40px rgba(249, 115, 22, 0.3);">
+                      3
+                    </span>
+                  </div>
+
+                  <!-- Content -->
+                  <div class="flex-1 pt-2 pb-20 relative">
+                    <h3 class="text-xl md:text-2xl font-semibold text-white mb-4 tracking-tight">
+                      Buy Your$BITWHALE
+                    </h3>
+                    <p class="text-sm md:text-base text-neutral-400 leading-relaxed mb-4">
+                      Head to the Uniswap to purchase your$BITWHALE. Paste the$BITWHALE contract address to swap your SOL into$BITWHALE.
+                    </p>
+                    
+                    <!-- Icon Indicator -->
+                    <div class="absolute bottom-8 left-0 flex items-center gap-2">
+                      <div class="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500/20 to-pink-600/20 border border-purple-500/30 flex items-center justify-center group-hover:scale-110 transition-transform duration-300">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-purple-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                          <path stroke-linecap="round" stroke-linejoin="round" d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6"/>
+                        </svg>
+                      </div>
+                      <span class="text-xs text-neutral-500 font-medium uppercase tracking-wider">Start Trading</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Glow Effect on Hover -->
+                <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none">
+                  <div class="absolute inset-0 bg-gradient-to-r from-purple-500/5 to-transparent"></div>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Outer Glow Border -->
+            <div class="absolute -inset-1 bg-gradient-to-r from-orange-500/10 via-cyan-500/10 to-purple-500/10 rounded-3xl blur-xl -z-10 opacity-50"></div>
+          </div>
+        </div>
+
+        <!-- Buy Now CTA Button -->
+        <div class="mt-12 flex justify-center reveal delay-200">
+          <a href="https://app.uniswap.org/#/swap?inputCurrency=eth&outputCurrency=0x44287324752d3007c22f220fb566631e2be7bf4c" 
+             target="_blank"
+             class="group relative inline-flex items-center justify-center gap-4 
+                    px-16 py-5 bg-gradient-to-r from-orange-500 via-orange-600 to-orange-500
+                    hover:from-orange-600 hover:via-orange-700 hover:to-orange-600
+                    rounded-2xl transition-all duration-300 
+                    shadow-2xl shadow-orange-500/30 hover:shadow-orange-500/50
+                    border border-orange-400/20 hover:border-orange-400/40
+                    w-full max-w-2xl overflow-hidden">
+            <!-- Animated background gradient -->
+            <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent 
+                        translate-x-[-100%] group-hover:translate-x-[100%] 
+                        transition-transform duration-1000"></div>
+            
+            <!-- Button content -->
+            <span class="relative text-xl font-bold text-white tracking-wide z-10"
+                  style="text-shadow: 0 2px 20px rgba(0,0,0,0.3);">
+              Buy Now
+            </span>
+            <svg xmlns="http://www.w3.org/2000/svg" 
+                 class="relative w-6 h-6 text-white z-10 group-hover:translate-x-2 transition-transform" 
+                 fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13 7l5 5m0 0l-5 5m5-5H6"/>
+            </svg>
+          </a>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="border-t border-white/5 bg-neutral-900/50 backdrop-blur-sm py-4 px-6">
+      <div class="max-w-7xl mx-auto">
+        <!-- Single Row Layout -->
+        <div class="flex flex-col md:flex-row justify-between items-center gap-4">
+          <!-- Left: Logo -->
+          <span class="text-lg font-bold tracking-tight" style="color: #FF9500;">
+           $BITWHALE
+          </span>
+          
+          <!-- Center: Copyright -->
+          <div class="text-xs text-neutral-500 order-last md:order-none">
+            © 2026 BitcoinWhale. All rights reserved.
+          </div>
+          
+          <!-- Right: Action Buttons -->
+          <div class="flex items-center gap-3">
+            <!-- X Community Button -->
+            <a href="hhttps://x.com/The_BTC_Whale" 
+               target="_blank"
+               class="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 
+                      border border-white/10 rounded-lg transition-all">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" 
+                   stroke="currentColor" stroke-width="2" class="w-4 h-4 text-white/70">
+                <path d="M4 4l11.733 16h4.267l-11.733 -16z"></path>
+                <path d="M4 20l6.768 -6.768m2.46 -2.46l6.772 -6.772"></path>
+              </svg>
+              <span class="text-xs font-semibold text-white/80">X Community</span>
+            </a>
+            
+            <!-- Contract Address -->
+            <button onclick="copyToClipboard(this)" 
+                    class="flex items-center gap-2 px-4 py-2 bg-white/5 hover:bg-white/10 
+                           border border-white/10 rounded-lg transition-all group">
+              <span class="text-xs font-mono text-cyan-400 group-hover:text-orange-500 transition-colors">
+                0x44287324752d3007c22f220fb566631e2be7bf4c
+              </span>
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-cyan-400 group-hover:text-orange-500 transition-colors" 
+                   fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                <path stroke-linecap="round" stroke-linejoin="round" 
+                      d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div>
+    </footer>
+
+    <!-- Image Preview Popup Modal -->
+    <div id="image-preview-modal" class="fixed inset-0 z-[100] hidden items-center justify-center">
+      <!-- Backdrop -->
+      <div class="absolute inset-0 bg-black/80 backdrop-blur-sm" onclick="closeImagePreview()"></div>
+      
+      <!-- Modal Container -->
+      <div class="relative z-10 max-w-6xl max-h-[90vh] m-4 animate-modal-in">
+        <!-- Liquid Glass Border Effect -->
+        <div class="liquid-border-popup relative rounded-2xl overflow-hidden">
+          <!-- Close X Button -->
+          <button onclick="closeImagePreview()" class="absolute top-4 right-4 z-20 w-10 h-10 flex items-center justify-center rounded-full bg-black/50 backdrop-blur-sm hover:bg-black/70 transition-all group">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="text-white group-hover:scale-110 transition-transform">
+              <line x1="18" y1="6" x2="6" y2="18"></line>
+              <line x1="6" y1="6" x2="18" y2="18"></line>
+            </svg>
+          </button>
+          
+          <!-- Image Display -->
+          <div class="relative bg-black/90 backdrop-blur-md rounded-2xl overflow-hidden">
+            <img id="preview-image" src="" alt="Preview" class="w-full h-auto max-h-[70vh] object-contain">
+            
+            <!-- Action Buttons -->
+            <div class="flex gap-4 p-6 justify-center bg-gradient-to-t from-black/80 to-transparent">
+              <button onclick="closeImagePreview()" class="px-6 py-3 bg-white/10 backdrop-blur-md text-white font-semibold rounded-lg hover:bg-white/20 transition-all border border-white/20">
+                Close Image
+              </button>
+              <button id="modal-download-btn" class="px-6 py-3 bg-gradient-to-r from-orange-500 to-orange-600 text-white font-semibold rounded-lg hover:from-orange-600 hover:to-orange-700 transition-all shadow-lg">
+                Download Image
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <style>
+    /* Liquid Glass Border Animation for Popup */
+    .liquid-border-popup::before {
+      content: '';
+      position: absolute;
+      inset: -3px;
+      background: linear-gradient(45deg, 
+        #F7931A 0%,      /* Bitcoin orange */
+        #FF9500 20%,     /* Bright orange */
+        #FFA726 40%,     /* Light orange */
+        #FF9500 60%,     /* Bright orange */
+        #E8820C 80%,     /* Medium orange */
+        #F7931A 100%     /* Bitcoin orange */
+      );
+      border-radius: inherit;
+      z-index: -1;
+      filter: blur(16px);
+      opacity: 0.9;
+      animation: liquid-pulse 3s ease-in-out infinite;
+    }
+
+    @keyframes liquid-pulse {
+      0%, 100% { opacity: 0.8; transform: scale(1); }
+      50% { opacity: 1; transform: scale(1.02); }
+    }
+
+    @keyframes modal-in {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .animate-modal-in {
+      animation: modal-in 0.3s ease-out;
+    }
+    </style>
+
+    <!-- Scripts -->
+    <script>
+      // Loading screen control
+      (function() {
+        const minimumLoadTime = 1250; // Minimum display time
+        const maximumLoadTime = 2500; // Maximum 2.5 seconds regardless of load status
+        const startTime = Date.now();
+        
+        // Animate loading text dots
+        const loadingText = document.getElementById('loading-text');
+        const loadingStates = ['LOADING', 'LOADING.', 'LOADING..', 'LOADING...'];
+        let currentState = 0;
+        
+        const loadingInterval = setInterval(function() {
+          currentState = (currentState + 1) % loadingStates.length;
+          if (loadingText) {
+            loadingText.textContent = loadingStates[currentState];
+          }
+        }, 400);
+        
+        let hasHidden = false;
+        function hideLoadingScreen() {
+          if (hasHidden) return;
+          hasHidden = true;
+          
+          clearInterval(loadingInterval);
+          const loader = document.getElementById('loading-screen');
+          loader.style.animation = 'fade-out-loader 0.6s ease forwards';
+          setTimeout(function() {
+            loader.style.display = 'none';
+          }, 600);
+        }
+        
+        // Hide after DOM is ready (fast)
+        window.addEventListener('DOMContentLoaded', function() {
+          const elapsedTime = Date.now() - startTime;
+          const remainingTime = Math.max(0, minimumLoadTime - elapsedTime);
+          setTimeout(hideLoadingScreen, remainingTime);
+        });
+        
+        // Fallback: force hide after maximum time
+        setTimeout(function() {
+          hideLoadingScreen();
+        }, maximumLoadTime);
+      })();
+
+      // Scroll progress bar
+      let ticking = false;
+      const progressBar = document.getElementById('scroll-progress');
+
+      window.addEventListener('scroll', function() {
+        if (!ticking) {
+          window.requestAnimationFrame(function() {
+            // Update scroll progress bar
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - window.innerHeight;
+            const scrolled = height > 0 ? (winScroll / height) : 0;
+            progressBar.style.transform = 'scaleX(' + scrolled + ')';
+            ticking = false;
+          });
+          ticking = true;
+        }
+      });
+
+      // Video Controls Functionality
+      (function() {
+        const video = document.getElementById('hero-video');
+        const muteToggle = document.getElementById('mute-toggle');
+        const muteIcon = document.getElementById('mute-icon');
+        const unmuteIcon = document.getElementById('unmute-icon');
+        const progressBar = document.getElementById('video-progress');
+        const scrubberContainer = document.getElementById('video-scrubber-container');
+        const tooltip = document.getElementById('scrubber-tooltip');
+
+        if (!video) return;
+
+        // Mute toggle
+        muteToggle.addEventListener('click', function() {
+          video.muted = !video.muted;
+          if (video.muted) {
+            muteIcon.classList.remove('hidden');
+            unmuteIcon.classList.add('hidden');
+          } else {
+            muteIcon.classList.add('hidden');
+            unmuteIcon.classList.remove('hidden');
+          }
+        });
+
+        // Update progress bar
+        video.addEventListener('timeupdate', function() {
+          const progress = (video.currentTime / video.duration) * 100;
+          progressBar.style.width = progress + '%';
+        });
+
+        // Scrubber seeking
+        scrubberContainer.addEventListener('click', function(e) {
+          const rect = scrubberContainer.getBoundingClientRect();
+          const pos = (e.clientX - rect.left) / rect.width;
+          video.currentTime = pos * video.duration;
+        });
+
+        // Scrubber tooltip
+        scrubberContainer.addEventListener('mousemove', function(e) {
+          const rect = scrubberContainer.getBoundingClientRect();
+          const pos = (e.clientX - rect.left) / rect.width;
+          const time = pos * video.duration;
+          const minutes = Math.floor(time / 60);
+          const seconds = Math.floor(time % 60).toString().padStart(2, '0');
+          tooltip.textContent = minutes + ':' + seconds;
+          tooltip.style.left = (e.clientX - rect.left) + 'px';
+        });
+      })();
+
+      // Responsive Contract Address Truncation
+      (function() {
+        const fullAddress = '0x44287324752d3007c22f220fb566631e2be7bf4c';
+        const walletTextElement = document.getElementById('wallet-text');
+        
+        if (!walletTextElement) return;
+        
+        function truncateAddress() {
+          const width = window.innerWidth;
+          
+          if (width >= 1024) {
+            // Desktop: Full address
+            walletTextElement.textContent = fullAddress;
+          } else if (width >= 640) {
+            // Medium screens: first 17, last 9
+            const first = fullAddress.substring(0, 17);
+            const last = fullAddress.substring(fullAddress.length - 9);
+            walletTextElement.textContent = first + '......' + last;
+          } else {
+            // Small screens: first 7, last 6
+            const first = fullAddress.substring(0, 7);
+            const last = fullAddress.substring(fullAddress.length - 6);
+            walletTextElement.textContent = first + '......' + last;
+          }
+        }
+        
+        // Initial truncation
+        truncateAddress();
+        
+        // Update on resize (debounced)
+        let resizeTimer;
+        window.addEventListener('resize', function() {
+          clearTimeout(resizeTimer);
+          resizeTimer = setTimeout(truncateAddress, 150);
+        });
+      })();
+
+      // Copy to Clipboard Functionality
+      function copyToClipboard(button) {
+          const walletAddress = "0x44287324752d3007c22f220fb566631e2be7bf4c";
+          const textElement = document.getElementById('wallet-text');
+          const originalText = textElement.textContent; // Save truncated version
+
+          navigator.clipboard.writeText(walletAddress).then(() => {
+              textElement.innerText = "$BITWHALE CA COPIED TO CLIPBOARD";
+              textElement.classList.add('text-cyan-400');
+              textElement.classList.remove('font-mono');
+              textElement.classList.add('font-bold');
+
+              setTimeout(() => {
+                  textElement.innerText = originalText; // Restore truncated version
+                  textElement.classList.remove('text-cyan-400');
+                  textElement.classList.add('font-mono');
+                  textElement.classList.remove('font-bold');
+              }, 2000);
+          });
+      }
+
+      // Generate Images for Content Depo (supports 1-100)
+      const grid = document.getElementById('image-grid');
+      for (let i = 1; i <= 100; i++) {
+          const wrapper = document.createElement('div');
+          wrapper.className = "group relative aspect-square bg-white/5 rounded-xl overflow-hidden border border-white/5 hover:border-cyan-500/30 transition-all duration-300 reveal";
+          wrapper.style.transitionDelay = `${(i % 4) * 50}ms`; // Stagger effect
+          wrapper.onclick = function(e) {
+            // Don't open modal if clicking download button
+            if (e.target.closest('button')) return;
+            openImagePreview(i + '.png', i + '.png');
+          };
+
+          // Load first 8 images eagerly, rest lazily for better perceived performance
+          const loadingStrategy = i <= 8 ? 'eager' : 'lazy';
+
+          wrapper.innerHTML = `
+              <img src="${i}.png" alt="Community Content ${i}"
+                   loading="${loadingStrategy}"
+                   decoding="async"
+                   class="w-full h-full object-cover opacity-80 group-hover:opacity-40 group-hover:scale-105 transition-all duration-500"
+                   onerror="this.parentElement.style.display='none'">
+
+              <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                  <button onclick="downloadImage('${i}.png', '${i}.png')" class="px-5 py-2.5 bg-white/10 backdrop-blur-md text-white text-xs font-semibold rounded-full transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 flex items-center gap-2 hover:bg-white hover:text-black border border-white/20">
+                      <span class="iconify" data-icon="lucide:download" data-stroke-width="2"></span>
+                      Download Image
+                  </button>
+              </div>
+          `;
+          grid.appendChild(wrapper);
+      }
+
+      // Scroll Reveal Observer
+      const observerOptions = {
+          threshold: 0.1,
+          rootMargin: "0px 0px -50px 0px"
+      };
+
+      const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+              if (entry.isIntersecting) {
+                  entry.target.classList.add('active');
+              }
+          });
+      }, observerOptions);
+
+      document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+      // Image Preview Modal Functions
+      let currentImagePath = '';
+      let currentImageName = '';
+
+      function openImagePreview(imagePath, imageName) {
+        currentImagePath = imagePath;
+        currentImageName = imageName;
+        const modal = document.getElementById('image-preview-modal');
+        const previewImage = document.getElementById('preview-image');
+        const downloadBtn = document.getElementById('modal-download-btn');
+        
+        previewImage.src = imagePath;
+        modal.classList.remove('hidden');
+        modal.classList.add('flex');
+        document.body.style.overflow = 'hidden';
+        
+        downloadBtn.onclick = function() {
+          downloadImage(currentImagePath, currentImageName);
+        };
+      }
+
+      function closeImagePreview() {
+        const modal = document.getElementById('image-preview-modal');
+        modal.classList.add('hidden');
+        modal.classList.remove('flex');
+        document.body.style.overflow = 'auto';
+      }
+
+      function downloadImage(imagePath, imageName) {
+        const link = document.createElement('a');
+        link.href = imagePath;
+        link.download = imageName;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      }
+
+      // Close modal on Escape key
+      document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape') {
+          closeImagePreview();
+        }
+      });
+
+      // Mobile menu functionality
+      (function() {
+        const menuBtn = document.getElementById('mobile-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay');
+        const menuLinks = document.querySelectorAll('.menu-link');
+
+        function openMenu() {
+          mobileMenu.classList.remove('translate-x-full');
+          mobileMenuOverlay.classList.remove('opacity-0', 'invisible');
+          document.body.style.overflow = 'hidden';
+          
+          // Fade in menu items with stagger
+          setTimeout(function() {
+            menuLinks.forEach(function(link, index) {
+              setTimeout(function() {
+                link.style.opacity = '1';
+                link.style.transform = 'translateX(0)';
+              }, index * 100);
+            });
+          }, 200);
+        }
+
+        function closeMenu() {
+          mobileMenu.classList.add('translate-x-full');
+          mobileMenuOverlay.classList.add('opacity-0', 'invisible');
+          document.body.style.overflow = 'auto';
+          
+          // Reset menu links
+          menuLinks.forEach(function(link) {
+            link.style.opacity = '0';
+            link.style.transform = 'translateX(20px)';
+          });
+        }
+
+        if (menuBtn) menuBtn.addEventListener('click', openMenu);
+        if (closeMenuBtn) closeMenuBtn.addEventListener('click', closeMenu);
+        if (mobileMenuOverlay) mobileMenuOverlay.addEventListener('click', closeMenu);
+        
+        // Close menu when clicking on a link
+        menuLinks.forEach(function(link) {
+          link.addEventListener('click', closeMenu);
+        });
+      })();
+    </script>
+  
+</body></html>
+</body></html>
